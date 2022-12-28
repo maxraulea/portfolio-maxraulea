@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import Navbar from '../components/Navbar'
+import TestText from '../components/TestText'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -13,7 +13,7 @@ export default function Home() {
         <Head>
           <title>Max Răulea</title>
         </Head>
-        <Navbar/>
+        <TestText/>
       </div>
     </>
   )
