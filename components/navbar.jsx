@@ -1,5 +1,7 @@
 import react from "react";
+import { Transition } from '@headlessui/react'
 import Link from "next/link";
+import Image from "next/image";
 
 const navbar = ({heading ,message}) =>{
 
@@ -12,8 +14,27 @@ const navbar = ({heading ,message}) =>{
 
     const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
 
+    const FadeIn = ({ delay, children }) => (
+        <Transition.Child
+          enter={`transition-all ease-in-out duration-700 ${delay}`}
+          enterFrom="opacity-0 translate-y-6"
+          enterTo="opacity-100 translate-y-0"
+          leave="transition-all ease-in-out duration-300"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          {children}
+        </Transition.Child>
+      )
+
     return(   
         <div>
+            <div className="fixed flex items-center left-20 top-20 text-xl font-bold">
+                <p>
+                Max Răulea  
+                </p>
+            </div>
+
             <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all">
                 <button className="h-10 w-10"
                 onClick={() => {
@@ -41,39 +62,48 @@ const navbar = ({heading ,message}) =>{
 
             <div className={nav ? "items-center flex w-full h-screen bg-emerald-400 text-center ease-in duration-600" 
                 : "sm:hidden ease-in duration-600"}>
-                    <ul className="ml-80 mb-60">
-                        <li onClick={handleNav} className="p-1 text-6xl hover:font-bold hover:scale-125 transform transition-all flex">
-                            <svg class="h-15 w-15"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            <Link href="/">
-                                Home
-                            </Link>
-                        </li>
-                        <li onClick={handleNav} className="p-1 text-6xl hover:font-bold hover:scale-125 transform transition-all">
-                            <Link href="#vision">
-                                Vision
-                            </Link>
-                        </li>
-                        <li onClick={handleNav} className="p-1 text-6xl hover:font-bold hover:scale-125 transform transition-all">
-                            <Link href="#information">                                    
-                                team
-                            </Link>
-                        </li>
-                        <li onClick={handleNav} className="p-1 text-6xl hover:font-bold hover:scale-125 transform transition-all">
-                            <Link href="#contact">
-                                Contact
-                            </Link>
-                        </li>
+
+                    <ul className="ml-80 mb-60 w-56 h-56 ">
+                        <Transition.Root className="mx-auto my-16 max-w-md space-y-4" show={nav}>
+                        <FadeIn delay="delay-[100ms]">
+                            <li onClick={handleNav} className="p-1 hover:font-bold hover:scale-125 transform flex transition-all">
+                                <p className="text-xl font-thin">01</p>
+                                <Link href="/" className="text-6xl">
+                                    HOME
+                                </Link>
+                            </li>
+                            </FadeIn>
+                            <FadeIn delay="delay-[400ms]">
+                            <li onClick={handleNav} className="p-1 text-6xl hover:font-bold flex hover:scale-125 transform transition-all">
+                            <p className="text-xl font-thin">02</p>
+                                <Link href="#vision">
+                                    ABOUT
+                                </Link>
+                            </li>
+                            </FadeIn>
+                            <FadeIn delay="delay-[700ms]">
+                            <li onClick={handleNav} className="p-1 text-6xl flex hover:font-bold hover:scale-125 transform transition-all">
+                            <p className="text-xl font-thin">03</p>
+                                <Link href="#information">                                    
+                                    WORK
+                                </Link>
+                            </li>
+                            </FadeIn>
+                            <FadeIn delay="delay-[1000ms]">
+                            <li onClick={handleNav} className="p-1 text-6xl flex hover:font-bold hover:scale-125 transform transition-all">
+                            <p className="text-xl font-thin">04</p>
+                                <Link href="#contact">
+                                    CONTACT
+                                </Link>
+                            </li>
+                            </FadeIn>
+                        </Transition.Root>
                     </ul>
+                    <div className="right-20 bottom-20 absolute flex">
+                        <div className="p-3"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40}/></a></div>
+                        <div className="p-3 mt-[-5px]"><Image src="/images/github-markup.png" width={40} height={40}/></div>
+                        <div className="p-3"><Image src="/images/linkedinblack.png" width={40} height={40}/></div>
+                    </div>
                 </div>
         </div>
         
