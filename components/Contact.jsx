@@ -13,7 +13,7 @@ const Contact = ({heading ,message}) =>{
       let data = {
           name,
           email,
-          message
+          userMessage
         }
       fetch('/api/contact', {
           method: 'POST',
