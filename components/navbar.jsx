@@ -29,13 +29,13 @@ const navbar = ({heading ,message}) =>{
 
     return(   
         <div>
-            <div className="fixed flex items-center left-20 top-20 text-xl font-bold">
+            <div className="fixed flex items-center left-20 top-20 text-xl font-bold z-10">
                 <p>
                 Max Răulea  
                 </p>
             </div>
 
-            <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all">
+            <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all z-10">
                 <button className="h-10 w-10"
                 onClick={() => {
                     handleNav();
@@ -60,7 +60,7 @@ const navbar = ({heading ,message}) =>{
                 </button>
             </div>
 
-            <div className={nav ? "items-center flex w-full h-screen bg-emerald-400 text-center ease-in duration-600" 
+            <div className={nav ? "items-center flex w-full h-screen fixed bg-emerald-400 text-center ease-in duration-600" 
                 : "sm:hidden ease-in duration-600"}>
 
                     <ul className="ml-80 mb-60 w-56 h-56 ">
@@ -100,9 +100,9 @@ const navbar = ({heading ,message}) =>{
                         </Transition.Root>
                     </ul>
                     <div className="right-20 bottom-20 absolute flex">
-                        <div className="p-3"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40}/></a></div>
-                        <div className="p-3 mt-[-5px]"><Image src="/images/github-markup.png" width={40} height={40}/></div>
-                        <div className="p-3"><Image src="/images/linkedinblack.png" width={40} height={40}/></div>
+                        <div className="p-3 hover:scale-125 transform transition-all"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40}/></a></div>
+                        <div className="p-3 mt-[-5px] hover:scale-125 transform transition-all"><a href="https://github.com/maxraulea"><Image src="/images/github-markup.png" width={40} height={40}/></a></div>
+                        <div className="p-3 hover:scale-125 transform transition-all"><a><Image src="/images/linkedinblack.png" width={40} height={40}/></a></div>
                     </div>
                 </div>
         </div>
