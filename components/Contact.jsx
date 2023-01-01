@@ -44,15 +44,14 @@ const Contact = ({heading ,message}) =>{
           </div>
           <div className="w-[35%] m-auto">
             <form className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <label for="first">Name:</label>
+            <label htmlFor="first">Name:</label>
             <input type="text" onChange={(e)=>{setName(e.target.value)}} name='name' className="border-2 rounded-md"/>
-            <label for="last">email:</label>
+            <label htmlFor="last">email:</label>
             <input type="text" onChange={(e)=>{setEmail(e.target.value)}} name='email' className="border-2 rounded-md"/>
             <textarea  onChange={(e)=>{setMessage(e.target.value)}} name='userMessage' className="border-2 rounded-md"/>
             <button type='submit' onClick={(e)=>{handleSubmit(e)}}>Submit</button>
             </form>
-          </div>
-                  
+          </div>       
         </div>
      )
 }
