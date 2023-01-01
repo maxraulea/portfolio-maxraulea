@@ -1,7 +1,7 @@
-const TestText = ({heading ,message}) =>{
+const Hero = ({heading ,message}) =>{
     return( 
         <div>
-            
+
         </div>
     )
 }
