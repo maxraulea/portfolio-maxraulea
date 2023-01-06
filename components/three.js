@@ -11,39 +11,112 @@ export default class ViewGL{
             antialias: false,
         });
 
+        const controls = new OrbitControls( this.camera, this.renderer.domElement);
+        controls.maxDistance = 7.0;
+        controls.minDistance = 2.0
+        controls.enablePan = false;
+        
+
+        window.addEventListener("wheel", function(e) {
+            if(controls.getDistance() > 6.9 ){
+                controls.enableZoom = false;
+            }
+
+          }, true);
+
+
         const loader = new THREE.TextureLoader();
-        const leaf = loader.load('/images/tropical-leaf-icon-by-Vexels.png');
+        const sprite = loader.load('/images/disc.png');
 
+        //materials
+        const particlesMaterial = new THREE.PointsMaterial( { 
+            size: 0.02, 
+            sizeAttenuation: true, 
+            map: sprite, 
+            alphaTest: .2, 
+            transparent: true, 
+            fog: true, } );
 
+        particlesMaterial.color.setHSL( 1.0, 0.3, 0.7 );
+        particlesMaterial.color = new THREE.Color(0xf2ebc4);
 
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: .05,
-            map: leaf,
-            transparent: true
-        });
-        particlesMaterial.color = new THREE.Color(0xCBDCCB);
-
+        //geometries
         const particleGeometry = new THREE.BufferGeometry;
-        const  particlesCnt = 500;
+
+        const particlesCnt = 25000;
+
+       function getArtThing({verticies, colours}){
+
+        const artMaterial = new THREE.MeshBasicMaterial({
+            vertexColors: true,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.3,
+            shininess: 250,
+            specular: 0xffffff
+        });
+
+        const art = new THREE.BufferGeometry;
+        art.setAttribute("position", new THREE.Float32BufferAttribute(verticies, 4));
+        art.setAttribute("color", new THREE.Float32BufferAttribute(colours, 3));
+        art.computeBoundingSphere();
+
+        const mesh = new THREE.Mesh(art, artMaterial);
+
+        function update(){
+            
+            
+        }
+        return { mesh, update };
+       }
+
+       function getPoints(){
+            const verticies = [];
+            const colours = [];
+            const numPoints = 100;
+            const size = 2;
+            let w, x, y, z, r, g, b;
+            for(let i = 0; i < numPoints; i++){
+                
+                x =Math.random() * size - size * 0.5;
+                y = Math.random() * size - size * 0.5;
+                z = Math.random() * size - size * 0.5;
+                w = Math.random() * size - size * 0.5; 
+                verticies.push(w, x, y, z)
+                r = Math.random() * 1.2;
+                g = Math.random() * 1.2;
+                b = Math.random() * 1.2;
+                colours.push(r, g, b)
+            }
+            return {verticies, colours };
+       }
+
+        const points = getPoints();
+        const artThing = getArtThing(points);
+
 
         const posArray = new Float32Array(particlesCnt * 3);
 
         for(let i = 0; i < particlesCnt * 3; i++){
-            posArray[i] = (Math.random() - 0.5) * 5;  
+            posArray[i] = (Math.random() - 0.5) * 15;  
     
         }
-
+        
         particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
 
         this.camera.position.x = 0;
         this.camera.position.y = 0;
-        this.camera.position.z = 2;
+        this.camera.position.z = 3;
         this.scene.add(this.camera);
-
 
         // Mesh
         const particlesMesh = new THREE.Points(particleGeometry, particlesMaterial);
-        this.scene.add(particlesMesh);
+        artThing.mesh.position.x = 0;
+        artThing.mesh.position.y = 0;
+        artThing.mesh.position.z = 0;
+        artThing.mesh.rotateY(4);
+        this.scene.add(particlesMesh, artThing.mesh);
 
         // Create meshes, materials, etc.
 
@@ -57,18 +130,24 @@ export default class ViewGL{
 
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        this.renderer.setClearColor(new THREE.Color('#21282a'), 1)
+        this.renderer.setClearColor(new THREE.Color('#000000'), 1)
+        this.scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
+
 
         const tick = () =>
 {
 
     const elapsedTime = clock.getElapsedTime();
+    const time = Date.now() * 0.00005;
 
     // Update objects
-    particlesMesh.up
-    particlesMesh.rotation.y =  -mouseX * elapsedTime * 0.00005;
-    particlesMesh.rotation.x = -mouseY * elapsedTime * 0.00005;
-    
+    artThing.update();
+
+    particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
+    /*particlesMesh.rotation.z =  -mouseX  * 0.0005;
+    particlesMesh.rotation.x = -mouseY  * 0.0005;
+    artThing.mesh.rotation.y = -mouseX  * 0.0005;
+    artThing.mesh.rotation.x = -mouseY  * 0.0005;*/
 
     // Update Orbital Controls
     // controls.update()
@@ -80,18 +159,17 @@ export default class ViewGL{
     window.requestAnimationFrame(tick);
 }
 
-document.addEventListener('mousemove', animateParticles);
+    document.addEventListener('mousemove', animateParticles);
 
-let mouseX = 0;
-let mouseY = 0;
-function animateParticles(event){
-mouseY = event.clientY;
-mouseX = event.clientX;
-}
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        function animateParticles(event){
+            mouseY = event.clientY;
+            mouseX = event.clientX;
+        }
+        tick();
 
-tick()
-
-    
         this.update();
     }
 
