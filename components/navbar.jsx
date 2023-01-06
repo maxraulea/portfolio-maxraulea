@@ -29,13 +29,18 @@ const navbar = ({heading ,message}) =>{
 
     return(   
         <div>
+            
             <div className="fixed flex items-center left-20 top-20 text-xl font-bold z-10">
+            <Link href="/menu"> 
                 <p className="text-white"> 
                 Max Răulea  
                 </p>
+                </Link>
             </div>
 
+
             <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all z-10">
+                <Link href={nav ? "/" : "/menu"}>
                 <button className="h-10 w-10"
                 onClick={() => {
                     handleNav();
@@ -58,55 +63,9 @@ const navbar = ({heading ,message}) =>{
                         }`}
                     />
                 </button>
+                </Link>
             </div>
-
-            <div className={nav ? "items-center flex w-full h-screen fixed bg-emerald-400 text-center ease-in duration-600" 
-                : "sm:hidden ease-in duration-600"}>
-
-                    <ul className="ml-80 mb-60 w-56 h-56 ">
-                        <Transition.Root className="mx-auto my-16 max-w-md space-y-4" show={nav}>
-                        <FadeIn delay="delay-[100ms]">
-                            <li onClick={handleNav} className="p-1 hover:font-bold hover:scale-125 transform flex transition-all">
-                                <p className="text-xl font-thin">01</p>
-                                <Link href="/" className="text-6xl">
-                                    HOME
-                                </Link>
-                            </li>
-                            </FadeIn>
-                            <FadeIn delay="delay-[400ms]">
-                            <li onClick={handleNav} className="p-1 text-6xl hover:font-bold flex hover:scale-125 transform transition-all">
-                            <p className="text-xl font-thin">02</p>
-                                <Link href="#vision">
-                                    ABOUT
-                                </Link>
-                            </li>
-                            </FadeIn>
-                            <FadeIn delay="delay-[700ms]">
-                            <li onClick={handleNav} className="p-1 text-6xl flex hover:font-bold hover:scale-125 transform transition-all">
-                            <p className="text-xl font-thin">03</p>
-                                <Link href="#information">                                    
-                                    WORK
-                                </Link>
-                            </li>
-                            </FadeIn>
-                            <FadeIn delay="delay-[1000ms]">
-                            <li onClick={handleNav} className="p-1 text-6xl flex hover:font-bold hover:scale-125 transform transition-all">
-                            <p className="text-xl font-thin">04</p>
-                                <Link href="#contact">
-                                    CONTACT
-                                </Link>
-                            </li>
-                            </FadeIn>
-                        </Transition.Root>
-                    </ul>
-                    <div className="right-20 bottom-20 absolute flex">
-                        <div className="p-3 hover:scale-125 transform transition-all"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40}/></a></div>
-                        <div className="p-3 mt-[-5px] hover:scale-125 transform transition-all"><a href="https://github.com/maxraulea"><Image src="/images/github-markup.png" width={40} height={40}/></a></div>
-                        <div className="p-3 hover:scale-125 transform transition-all"><a><Image src="/images/linkedinblack.png" width={40} height={40}/></a></div>
-                    </div>
-                </div>
         </div>
-        
      )
 }
 
