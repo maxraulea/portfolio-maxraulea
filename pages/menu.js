@@ -1,7 +1,7 @@
-import react from "react";
 import { Transition } from '@headlessui/react'
 import Link from "next/link";
 import Image from "next/image";
+import react, { useContext } from "react";
 
 export default function menu(){
 
@@ -39,10 +39,21 @@ export default function menu(){
         Max Răulea  
         </p>
     </div>
+    <Link href={nav ? "/" : "/menu"}>
+    <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all z-10">
+                    <div
+                        className={`${genericHamburgerLine} ${ "bg-black rotate-45 translate-y-3 group-hover:opacity-100 "
+                        }`} />
+                        <div className={`${genericHamburgerLine} ${ "opacity-0" }`} />
+                    <div
+                        className={`${genericHamburgerLine} ${ "bg-black -rotate-45 -translate-y-3 group-hover:opacity-100"
+                        }`}
+                    />
+            </div>
+            </Link>
 
 
-
-    <div className= "items-center flex w-full h-screen fixed bg-emerald-400 text-center ease-in duration-600" >
+    <div className= "items-center absolute flex w-full h-screen bg-white text-center ease-in duration-600" >
 
             <ul className="ml-80 mb-60 w-56 h-56 ">
                 <Transition.Root className="mx-auto my-16 max-w-md space-y-4" show={nav}>
@@ -81,9 +92,9 @@ export default function menu(){
                 </Transition.Root>
             </ul>
             <div className="right-20 bottom-20 absolute flex">
-                <div className="p-3 hover:scale-125 transform transition-all"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40}/></a></div>
-                <div className="p-3 mt-[-5px] hover:scale-125 transform transition-all"><a href="https://github.com/maxraulea"><Image src="/images/github-markup.png" width={40} height={40}/></a></div>
-                <div className="p-3 hover:scale-125 transform transition-all"><a><Image src="/images/linkedinblack.png" width={40} height={40}/></a></div>
+                <div className="p-3 hover:scale-125 transform transition-all"><a href="http://www.twitter.com/MaxRaulea"><Image src="/images/twitter.png" width={40} height={40} alt="twitter"/></a></div>
+                <div className="p-3 mt-[-5px] hover:scale-125 transform transition-all"><a href="https://github.com/maxraulea"><Image src="/images/github-markup.png" width={40} height={40} alt="github"/></a></div>
+                <div className="p-3 hover:scale-125 transform transition-all"><a><Image src="/images/linkedinblack.png" width={40} height={40} alt="linkedin"/></a></div>
             </div>
         </div>
 </div>

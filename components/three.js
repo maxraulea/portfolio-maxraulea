@@ -1,6 +1,7 @@
 import { Thasadith } from '@next/font/google';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default class ViewGL{
     constructor(canvasRef) {
@@ -15,7 +16,6 @@ export default class ViewGL{
         controls.maxDistance = 7.0;
         controls.minDistance = 2.0
         controls.enablePan = false;
-        
 
         window.addEventListener("wheel", function(e) {
             if(controls.getDistance() > 6.9 ){
@@ -23,6 +23,19 @@ export default class ViewGL{
             }
 
           }, true);
+
+
+          let loadedModel;
+          const GLTFloader = new GLTFLoader();
+          GLTFloader.load("/images/astronaut.gltf", (gltfScene) =>{
+            loadedModel = gltfScene.scene;
+
+            gltfScene.scene.position.y = -1;
+            gltfScene.scene.rotateY = 2;
+            gltfScene.scene.scale.set(1.5, 1.5, 1.5);
+            this.scene.add(gltfScene.scene);
+          });
+
 
 
         const loader = new THREE.TextureLoader();
@@ -116,15 +129,17 @@ export default class ViewGL{
         artThing.mesh.position.y = 0;
         artThing.mesh.position.z = 0;
         artThing.mesh.rotateY(4);
-        this.scene.add(particlesMesh, artThing.mesh);
+        this.scene.add(particlesMesh);
 
         // Create meshes, materials, etc.
 
-        const pointLight = new THREE.PointLight(0xffffff, 0.1);
+        const ambLight = new THREE.AmbientLight(0x404040, 5)
+
+        const pointLight = new THREE.PointLight(0xffffff, .1);
         pointLight.position.x = 2;
         pointLight.position.y = 3;
         pointLight.position.z = 4;
-        this.scene.add(pointLight);
+        this.scene.add(pointLight, ambLight);
 
         const clock = new THREE.Clock();
 
@@ -143,6 +158,9 @@ export default class ViewGL{
     // Update objects
     artThing.update();
 
+    if(loadedModel){
+        loadedModel.rotation.y = -time * elapsedTime * 0.00000003;
+    }
     particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
     /*particlesMesh.rotation.z =  -mouseX  * 0.0005;
     particlesMesh.rotation.x = -mouseY  * 0.0005;
