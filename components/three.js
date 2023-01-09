@@ -16,18 +16,12 @@ export default class ViewGL{
         controls.maxDistance = 7.0;
         controls.minDistance = 2.0
         controls.enablePan = false;
+        controls.enableZoom = false;
 
-        window.addEventListener("wheel", function(e) {
-            if(controls.getDistance() > 6.9 ){
-                controls.enableZoom = false;
-            }
-
-          }, true);
-
-
+        //loaders
           let loadedModel;
           const GLTFloader = new GLTFLoader();
-          GLTFloader.load("/images/astronaut.gltf", (gltfScene) =>{
+          GLTFloader.load("/images/astronaut-green.gltf", (gltfScene) =>{
             loadedModel = gltfScene.scene;
 
             gltfScene.scene.position.y = -1;
@@ -35,8 +29,6 @@ export default class ViewGL{
             gltfScene.scene.scale.set(1.5, 1.5, 1.5);
             this.scene.add(gltfScene.scene);
           });
-
-
 
         const loader = new THREE.TextureLoader();
         const sprite = loader.load('/images/disc.png');
@@ -58,56 +50,6 @@ export default class ViewGL{
 
         const particlesCnt = 25000;
 
-       function getArtThing({verticies, colours}){
-
-        const artMaterial = new THREE.MeshBasicMaterial({
-            vertexColors: true,
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.3,
-            shininess: 250,
-            specular: 0xffffff
-        });
-
-        const art = new THREE.BufferGeometry;
-        art.setAttribute("position", new THREE.Float32BufferAttribute(verticies, 4));
-        art.setAttribute("color", new THREE.Float32BufferAttribute(colours, 3));
-        art.computeBoundingSphere();
-
-        const mesh = new THREE.Mesh(art, artMaterial);
-
-        function update(){
-            
-            
-        }
-        return { mesh, update };
-       }
-
-       function getPoints(){
-            const verticies = [];
-            const colours = [];
-            const numPoints = 100;
-            const size = 2;
-            let w, x, y, z, r, g, b;
-            for(let i = 0; i < numPoints; i++){
-                
-                x =Math.random() * size - size * 0.5;
-                y = Math.random() * size - size * 0.5;
-                z = Math.random() * size - size * 0.5;
-                w = Math.random() * size - size * 0.5; 
-                verticies.push(w, x, y, z)
-                r = Math.random() * 1.2;
-                g = Math.random() * 1.2;
-                b = Math.random() * 1.2;
-                colours.push(r, g, b)
-            }
-            return {verticies, colours };
-       }
-
-        const points = getPoints();
-        const artThing = getArtThing(points);
-
-
         const posArray = new Float32Array(particlesCnt * 3);
 
         for(let i = 0; i < particlesCnt * 3; i++){
@@ -117,29 +59,30 @@ export default class ViewGL{
         
         particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
         
-
+        //camera
         this.camera.position.x = 0;
         this.camera.position.y = 0;
-        this.camera.position.z = 3;
+        this.camera.position.z = 7;
         this.scene.add(this.camera);
 
         // Mesh
         const particlesMesh = new THREE.Points(particleGeometry, particlesMaterial);
-        artThing.mesh.position.x = 0;
-        artThing.mesh.position.y = 0;
-        artThing.mesh.position.z = 0;
-        artThing.mesh.rotateY(4);
         this.scene.add(particlesMesh);
 
-        // Create meshes, materials, etc.
+        //lights
 
         const ambLight = new THREE.AmbientLight(0x404040, 5)
+
+        const sun = new THREE.PointLight(0xFDB813, 3);
+        sun.position.y = 5;
+        sun.position.x = 5;
+        sun.position.z = 5;
 
         const pointLight = new THREE.PointLight(0xffffff, .1);
         pointLight.position.x = 2;
         pointLight.position.y = 3;
         pointLight.position.z = 4;
-        this.scene.add(pointLight, ambLight);
+        this.scene.add(pointLight, ambLight, sun);
 
         const clock = new THREE.Clock();
 
@@ -156,19 +99,13 @@ export default class ViewGL{
     const time = Date.now() * 0.00005;
 
     // Update objects
-    artThing.update();
 
     if(loadedModel){
-        loadedModel.rotation.y = -time * elapsedTime * 0.00000003;
+        loadedModel.rotation.y = -time * elapsedTime * 0.00000002;
+        loadedModel.rotation.x = -time * elapsedTime * 0.0000000025;
+        loadedModel.rotation.z = -time * elapsedTime * 0.0000000025;
     }
     particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
-    /*particlesMesh.rotation.z =  -mouseX  * 0.0005;
-    particlesMesh.rotation.x = -mouseY  * 0.0005;
-    artThing.mesh.rotation.y = -mouseX  * 0.0005;
-    artThing.mesh.rotation.x = -mouseY  * 0.0005;*/
-
-    // Update Orbital Controls
-    // controls.update()
 
     // Render
     this.renderer.render(this.scene, this.camera);
@@ -176,7 +113,7 @@ export default class ViewGL{
     // Call tick again on the next frame
     window.requestAnimationFrame(tick);
 }
-
+    //listen to mouse movement
     document.addEventListener('mousemove', animateParticles);
 
         let mouseX = 0;
