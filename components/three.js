@@ -102,8 +102,8 @@ export default class ViewGL{
 
     if(loadedModel){
         loadedModel.rotation.y = -time * elapsedTime * 0.00000002;
-        loadedModel.rotation.x = -time * elapsedTime * 0.0000000025;
-        loadedModel.rotation.z = -time * elapsedTime * 0.0000000025;
+        loadedModel.rotation.x = -time * elapsedTime * 0.00000000025;
+        loadedModel.rotation.z = -time * elapsedTime * 0.000000002;
     }
     particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
 

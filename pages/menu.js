@@ -40,7 +40,7 @@ export default function menu(){
         </p>
     </div>
     <Link href={nav ? "/" : "/menu"}>
-    <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all z-10">
+    <div className="flex flex-col justify-center items-end group fixed right-24 top-20 hover:scale-125 transform transition-all z-10">
                     <div
                         className={`${genericHamburgerLine} ${ "bg-black rotate-45 translate-y-3 group-hover:opacity-100 "
                         }`} />
