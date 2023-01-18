@@ -46,11 +46,11 @@ const Contact = ({heading ,message}) =>{
           <div className="w-[50%] h-[50%]">
             <form className="shadow-md rounded px-8 pt-6 pb-8 mb-4 text-white w-[100%]" id='contact'>
             <label htmlFor="name">Name:</label>
-            <input type="text" onChange={(e)=>{setName(e.target.value)}} name='name' className="border-2 rounded-md" form='contact' required/>
+            <input type="text" onChange={(e)=>{setName(e.target.value)}} name='name' className="border-2 rounded-md text-black block w-[75%] h-[20%] p-10" form='contact' required/>
             <label htmlFor="email">email:</label>
-            <input type="email" onChange={(e)=>{setEmail(e.target.value)}} name='email' className="border-2 rounded-md" form='contact' required/>
-            <label htmlFor="message">message::</label>
-            <textarea  onChange={(e)=>{setMessage(e.target.value)}} name='userMessage' className="border-2 rounded-md text-black" form='contact' required/>
+            <input type="email" onChange={(e)=>{setEmail(e.target.value)}} name='email' className="border-2 rounded-md text-black block w-[75%] h-[20%] p-10" form='contact' required/>
+            <label htmlFor="message">message:</label>
+            <textarea  onChange={(e)=>{setMessage(e.target.value)}} name='userMessage' className="border-2 rounded-md text-black block w-[75%] h-[140%] p-10" form='contact' required/>
             <button type='submit' onClick={(e)=>{handleSubmit(e)}} form="contact">Submit</button>
             </form>
           </div>       
