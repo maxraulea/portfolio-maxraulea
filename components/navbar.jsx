@@ -5,27 +5,15 @@ import Image from "next/image";
 
 const navbar = ({heading ,message}) =>{
 
-    const { useState } = react;
-    const [nav, setNav] = useState(false)
-
-    const handleNav = () => {
-        setNav(!nav)
-    }
 
     const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-white transition ease transform duration-300`;
-
-
 
     return(   
         <div>
             
             <div className="flex flex-col justify-center items-end group fixed right-20 top-20 hover:scale-125 transform transition-all z-10">
-                <Link href={nav ? "/" : "/menu"}>
+                <Link href={"/menu"}>
                 <button className="h-10 w-10"
-                onClick={() => {
-                    handleNav();
-                    }
-                }
                 >
                     <div
                         className={`${genericHamburgerLine} ${ "group-hover:opacity-100 "

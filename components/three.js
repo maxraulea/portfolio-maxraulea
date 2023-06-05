@@ -1,4 +1,3 @@
-import { Thasadith } from '@next/font/google';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
@@ -92,27 +91,26 @@ export default class ViewGL{
         this.scene.fog = new THREE.Fog( 0x050505, 2000, 3500 );
 
 
-        const tick = () =>
-{
+        const tick = () => {
 
-    const elapsedTime = clock.getElapsedTime();
-    const time = Date.now() * 0.00005;
+            const elapsedTime = clock.getElapsedTime();
+            const time = Date.now() * 0.00005;
 
-    // Update objects
+            // Update objects
 
-    if(loadedModel){
-        loadedModel.rotation.y = -time * elapsedTime * 0.00000002;
-        loadedModel.rotation.x = -time * elapsedTime * 0.00000000025;
-        loadedModel.rotation.z = -time * elapsedTime * 0.000000002;
-    }
-    particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
+            if(loadedModel){
+                loadedModel.rotation.y = -time * elapsedTime * 0.00000002;
+                loadedModel.rotation.x = -time * elapsedTime * 0.00000000025;
+                loadedModel.rotation.z = -time * elapsedTime * 0.000000002;
+            }
+            particlesMesh.rotation.y =  -time * elapsedTime * 0.000000001;
 
-    // Render
-    this.renderer.render(this.scene, this.camera);
+            // Render
+            this.renderer.render(this.scene, this.camera);
 
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick);
-}
+            // Call tick again on the next frame
+            window.requestAnimationFrame(tick);
+        }
     //listen to mouse movement
     document.addEventListener('mousemove', animateParticles);
 
